@@ -1,12 +1,14 @@
 import numpy as np
 from numpy import ndarray
+from random import choice
 
 
 class SMO:
-    def __init__(self, X: ndarray, y: ndarray, kernel: str, c: float):
+    def __init__(self, X: ndarray, y: ndarray, kernel: str, c: float, tol: float = 10e-4):
         self._X = X
         self._y = y
         self._C = c
+        self._tol = tol
         self._set_kernel_type(kernel)
 
         np.random.seed(42)
@@ -24,8 +26,8 @@ class SMO:
     def _linear_kernel(self, x1: ndarray, x2: ndarray) -> float:
         return np.inner(x1, x2)
 
-    # getting predictions
-    def _get_inner_product(self, x: ndarray) -> float:
+    # getting one prediction
+    def _get_prediction(self, x: ndarray) -> float:
         return np.sum(self._alphas*self._y*self._kernel(self._X, x)) + self._b
     
     # getting the bounds (considering our constraints)
@@ -40,7 +42,7 @@ class SMO:
 
     # calculating an error
     def _get_error(self, i: int) -> float:
-        return self._get_inner_product(self._X[i]) - self._y[i]
+        return self._get_prediction(self._X[i]) - self._y[i]
 
     # calculating eta
     def _get_eta(self, x1: ndarray, x2: ndarray) -> float:
@@ -70,19 +72,38 @@ class SMO:
         return (b1+b2)/2
 
     # one step of SMO
-    def _step(self, i: int, j: int) -> bool:
+    def _step(self, i: int, j: int, e1: float) -> bool:
         L, H = self._get_bounds(i, j)
-        e1 = self._get_error(i)
         e2 = self._get_error(j)
         eta = self._get_eta(self._X[i], self._X[j])
 
         if eta >= 0 or L >= H:
             return False
         
-        new_a2 = self._clip_alpha( self._alphas[j]-(self._y[j]*(e1-e2))/eta )
+        new_a2 = self._clip_alpha(L, H, self._alphas[j]-(self._y[j]*(e1-e2))/eta)
         new_a1 = self._alphas[i]+self._y[i]*self._y[j]*(self._alphas[j]-new_a2)
 
         self._b = self._get_threshold(i, j, new_a1, new_a2, e1, e2)
         self._alphas[i] = new_a1
         self._alphas[j] = new_a2
         return True
+
+    # getting predictions for every datapoint in the training dataset
+    def predictions(self) -> ndarray:
+        pred = np.array([])
+        for x in self._X:
+            pred = np.append(pred, self._get_prediction(x))
+        return pred
+
+    # getting an accuracy of current model's predictions
+    def get_acc(self) -> float:
+        return np.count_nonzero(np.sign(self.predictions()) == self._y) / len(self._y)
+
+    # the fitting method
+    def fit(self) -> float:
+        for i, a in enumerate(self._alphas):
+            e = self._get_error(i)
+            if (self._y[i]*e < -self._tol and a < self._C) or (self._y[i]*e > self._tol and a > 0):
+                j = choice(list(range(i)) + list(range(i+1, len(self._y))))
+                self._step(i, j, e)
+        return self.get_acc()
