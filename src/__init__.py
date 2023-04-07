@@ -1,1 +1,1 @@
-from .smo import SMO, KernelType
+from .smo import SMO
