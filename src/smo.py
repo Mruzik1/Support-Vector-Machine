@@ -11,7 +11,7 @@ class SMO:
         self._tol = tol
         self._set_kernel_type(kernel)
 
-        np.random.seed(42)
+        # np.random.seed(42)
         self._alphas = np.random.uniform(0, c, size=len(y))
         self._b = 0
     
