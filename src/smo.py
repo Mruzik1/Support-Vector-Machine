@@ -4,24 +4,24 @@ from random import choice
 
 
 class SMO:
-    def __init__(self, X: ndarray, y: ndarray, kernel: str, c: float, tol: float = 10e-4, sigma: float = 1):
+    def __init__(self, X: ndarray, y: ndarray, kernel: str, c: float = 1, tol: float = 10e-4, gamma: float = 0.1):
         self._X = X
         self._y = y
         self._C = c
         self._tol = tol
-        self._set_kernel_type(kernel, sigma)
+        self._set_kernel_type(kernel, gamma)
 
         np.random.seed(42)
         self._alphas = np.random.uniform(0, c, size=len(y))
         self._b = 0
     
     # for a more organised initialization
-    def _set_kernel_type(self, kernel: str, sigma: float):
+    def _set_kernel_type(self, kernel: str, gamma: float):
         if kernel.lower() == 'linear':
             self._kernel = self._linear_kernel
         elif kernel.lower() == 'rbf':
             self._kernel = self._rbf_kernel
-            self._gamma = 1/(2*sigma**2)
+            self._gamma = gamma
         else:
             raise AttributeError(f'A kernel type "{kernel}" does not exist!')
     
@@ -102,7 +102,7 @@ class SMO:
     # getting predictions for every datapoint in the training dataset
     def predict(self, features: ndarray, labels: ndarray) -> tuple:
         pred = np.array([self._get_prediction(x) for x in features])
-        acc = np.count_nonzero(np.sign(pred) == labels) / len(labels)
+        acc = np.count_nonzero(np.sign(pred) == labels) / labels.shape[0]
         return pred, acc
 
     # the fitting method

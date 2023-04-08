@@ -14,7 +14,7 @@ In this section I will quickly explain how to work with my SVM implementation.
 
 ## SMO Class' Init Method
 ```python
-def __init__(X: ndarray, y: ndarray, kernel: str, c: float, tol: float = 10e-4, sigma: float = 1)
+def __init__(X: ndarray, y: ndarray, kernel: str, c: float = 1, tol: float = 10e-4, sigma: float = 1)
 ```
 
 - **X** - a 2D numpy array; the first dimention contains data points, the second one contains the features.
