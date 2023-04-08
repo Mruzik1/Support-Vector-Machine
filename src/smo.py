@@ -4,27 +4,38 @@ from random import choice
 
 
 class SMO:
-    def __init__(self, X: ndarray, y: ndarray, kernel: str, c: float, tol: float = 10e-4):
+    def __init__(self, X: ndarray, y: ndarray, kernel: str, c: float, tol: float = 10e-4, sigma: float = 1):
         self._X = X
         self._y = y
         self._C = c
         self._tol = tol
-        self._set_kernel_type(kernel)
+        self._set_kernel_type(kernel, sigma)
 
-        # np.random.seed(42)
+        np.random.seed(42)
         self._alphas = np.random.uniform(0, c, size=len(y))
         self._b = 0
     
     # for a more organised initialization
-    def _set_kernel_type(self, kernel: str):
-        if kernel == 'linear':
+    def _set_kernel_type(self, kernel: str, sigma: float):
+        if kernel.lower() == 'linear':
             self._kernel = self._linear_kernel
+        elif kernel.lower() == 'rbf':
+            self._kernel = self._rbf_kernel
+            self._gamma = 1/(2*sigma**2)
         else:
-            raise AttributeError(f'An kernel type "{kernel}" does not exist!')
+            raise AttributeError(f'A kernel type "{kernel}" does not exist!')
     
     # a linear kernel function
     def _linear_kernel(self, x1: ndarray, x2: ndarray) -> float:
         return np.inner(x1, x2)
+
+    # a radial basis kernel function
+    def _rbf_kernel(self, x1: ndarray, x2: ndarray) -> float:
+        x1 = x1[np.newaxis, :] if np.ndim(x1) == 1 else x1
+        x2 = x2[np.newaxis, :] if np.ndim(x2) == 1 else x2
+        euclidean_dist = np.linalg.norm(x1[:, :, np.newaxis] - x2.T[np.newaxis, :, :], axis=1)**2
+
+        return np.exp(-self._gamma * np.squeeze(euclidean_dist))
 
     # getting one prediction
     def _get_prediction(self, x: ndarray) -> float:
@@ -107,3 +118,7 @@ class SMO:
                 j = choice(list(range(i)) + list(range(i+1, len(self._y))))
                 self._step(i, j, e)
         return self.get_acc()
+
+    # getting support vectors
+    def get_support_vectors(self, zero: float = 10e-5) -> ndarray:
+        return self._X[self._alphas > zero]
