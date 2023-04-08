@@ -100,7 +100,7 @@ class SMO:
         return True
 
     # getting predictions for every datapoint in the training dataset
-    def predict(self, features: ndarray, labels: ndarray = None) -> tuple:
+    def predict(self, features: ndarray, labels: ndarray) -> tuple:
         pred = np.array([self._get_prediction(x) for x in features])
         acc = np.count_nonzero(np.sign(pred) == labels) / len(labels)
         return pred, acc
