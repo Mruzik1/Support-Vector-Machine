@@ -48,4 +48,20 @@ def get_support_vectors(zero: float = 10e-5) -> ndarray
 - **RETURNS** - a numpy array of the support vectors from the training dataset.
 
 # Experiments
-Gonna add soon...
+## The Titanic Dataset
+The number of iterations is always **30**, numerical tolerance is always the same: **10e-4**. A random seed for numpy (to generate alphas) is **42**.
+
+| № | Kernel | C | Gamma | Training Accuracy | Testing Accuracy |
+| - | ------ | - | ----- | ----------------- | ---------------- |
+| 1 | Linear | 0.01 | - | 72.13% | 61.03% |
+| 2 | Linear | 0.1 | - | 69.47% | 56.19% |
+| 3 | Linear | 1 | - | 66.81% | 56.49% |
+| 4 | Linear | 10 | - | 64.99% | 56.19% |
+| 5 | Linear | 100 | - | 65.12% | 56.19% |
+| 6 | RBF | 0.01 | 0.1 | 59.38% | 61.63% |
+| 7 | RBF | 0.1 | 0.1 | 81.23% | 60.72% |
+| 8 | RBF | 1 | 0.1 | 86.41%  | 61.33% |
+| 9 | RBF | 10 | 0.1 | 94.82%  | 67.37% |
+| 10 | RBF | 100 | 0.1 | 94.54%  | 60.73% |
+| 11 | RBF | 10 | 1 | 97.20%  | 53.78% |
+| 12 | RBF | 10 | 0.01 | 81.79%  | 77.34% |
