@@ -100,24 +100,19 @@ class SMO:
         return True
 
     # getting predictions for every datapoint in the training dataset
-    def predictions(self) -> ndarray:
-        pred = np.array([])
-        for x in self._X:
-            pred = np.append(pred, self._get_prediction(x))
-        return pred
-
-    # getting an accuracy of current model's predictions
-    def get_acc(self) -> float:
-        return np.count_nonzero(np.sign(self.predictions()) == self._y) / len(self._y)
+    def predict(self, features: ndarray, labels: ndarray = None) -> tuple:
+        pred = np.array([self._get_prediction(x) for x in features])
+        acc = np.count_nonzero(np.sign(pred) == labels) / len(labels)
+        return pred, acc
 
     # the fitting method
-    def fit(self) -> float:
+    def fit(self) -> tuple:
         for i, a in enumerate(self._alphas):
             e = self._get_error(i)
             if (self._y[i]*e < -self._tol and a < self._C) or (self._y[i]*e > self._tol and a > 0):
                 j = choice(list(range(i)) + list(range(i+1, len(self._y))))
                 self._step(i, j, e)
-        return self.get_acc()
+        return self.predict(self._X, self._y)
 
     # getting support vectors
     def get_support_vectors(self, zero: float = 10e-5) -> ndarray:
