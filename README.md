@@ -68,24 +68,25 @@ The number of iterations is always **30**, numerical tolerance is always the sam
 
 ## Blobs and Circles (`blobs_circles_experiments.ipynb`)
 In this subsection I will visualize some data and the decision boundaries my model makes for the data. For this purpose I use two auto-generated datasets from the scikit-learn library: blobs and circles. And because it's better to always have the same data, I saved those as .csv files.
+*P.S. All the datapoints within a blue area (the gutter) are the support vectors*
 
 ### Blobs
-Since the data is linearly separable, the model can just use a dot-product as a kernel (**"linear"** kernel).
-
-Hyperparameters and other stuff:
-  - **C =** *0*
-  - **Gamma =** *0*
-  - **Numerical Tolerance =** *0*
-  - **Iterations =** *50*
+Used params:
+  - **Numerical Tolerance =** *0.001*
+  - **Iterations =** *25*
   - **Random Seed (for generating alphas) =** *42*
+  - **Kernel =** *"Linear"*
   
 ### Circles
-In this case a non-linear kernel function is unavoidable. Here I use the only one desired function I implemented - **"RBF"** :D
+Used params:
+  - **Numerical Tolerance =** *0.001*
+  - **Iterations =** *25*
+  - **Random Seed (for generating alphas) =** *42*
+  - **Kernel =** *"RBF"*
 
-Hyperparameters and other stuff:
-- **C =** *0*
-- **Gamma =** *0*
-- **Numerical Tolerance =** *0*
-- **Iterations =** *50*
-- **Random Seed (for generating alphas) =** *42*
-  
+| Plots | C | Gamma |
+| ----- | - | ----- |
+| <img src="imgs/circles_ex1.png" width=500px/> | 0.01 | 0.1 |
+| <img src="imgs/circles_ex2.png" width=500px/> | 0.1 | 1 |
+| <img src="imgs/circles_ex3.png" width=500px/> | 100 | 0.1 |
+| <img src="imgs/circles_ex4.png" width=500px/> | 2 | 35 |
