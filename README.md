@@ -73,9 +73,15 @@ In this subsection I will visualize some data and the decision boundaries my mod
 ### Blobs
 Used params:
   - **Numerical Tolerance =** *0.001*
-  - **Iterations =** *25*
+  - **Iterations =** *150*
   - **Random Seed (for generating alphas) =** *42*
   - **Kernel =** *"Linear"*
+  
+| Plots | C |
+| ----- | - |
+| <img src="imgs/blobs_ex1.png" width=500px/> | 0.01 |
+| <img src="imgs/blobs_ex2.png" width=500px/> | 1 |
+| <img src="imgs/blobs_ex3.png" width=500px/> | 100 |
   
 ### Circles
 Used params:
