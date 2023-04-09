@@ -49,7 +49,7 @@ def get_support_vectors(zero: float = 10e-5) -> ndarray
 
 # Experiments
 ## The Titanic Dataset
-The number of iterations is always **30**, numerical tolerance is always the same: **10e-4**. A random seed for numpy (to generate alphas) is **42**.
+The number of iterations is always **30**, numerical tolerance is always the same: **10e-4**. A random seed for numpy (to generate alphas) is **42**. You can find <a href="https://www.kaggle.com/competitions/titanic">the dataset</a> on Kaggle.
 
 | № | Kernel | C | Gamma | Training Accuracy | Testing Accuracy |
 | - | ------ | - | ----- | ----------------- | ---------------- |
