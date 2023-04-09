@@ -1,7 +1,9 @@
 # Abstract :^)
 Here I implemented SVM from scratch (only numpy was used) and tried to train it with different data and hyperparameters. An optimization algorithm I use here is SMO (i.e. Sequential Minimal Optimization), which is commonly used with Support Vector Machine. Although my implementation is a simplified version of the algorithm.
 
-Advantages of SMO:
+*P.S. The `testing_smo.ipynb` file was used to try different implementations for SVM, as well as the optimization techniques. For example, I started with a SGD optimization, so in the file you may see a learning rate variable (just a "leftlover"). Now it just repeats my main SMO script tho.*
+
+## Advantages of SMO:
   - **Scalability:** SMO is designed to work well with large datasets.
   - **Convergence:** SMO has a proven convergence guarantee, which means that it will converge to the optimal solution given enough iterations.
   - **Flexibility:** SMO can handle a wide range of kernel functions, including linear, polynomial, and RBF kernels.
