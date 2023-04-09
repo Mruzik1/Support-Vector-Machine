@@ -48,7 +48,7 @@ def get_support_vectors(zero: float = 10e-5) -> ndarray
 - **RETURNS** - a numpy array of the support vectors from the training dataset.
 
 # Experiments
-## The Titanic Dataset
+## The Titanic Dataset (`titanic_experiments.ipynb`)
 The number of iterations is always **30**, numerical tolerance is always the same: **10e-4**. A random seed for numpy (to generate alphas) is **42**. You can find <a href="https://www.kaggle.com/competitions/titanic">the dataset</a> on Kaggle.
 
 | № | Kernel | C | Gamma | Training Accuracy | Testing Accuracy |
@@ -66,7 +66,7 @@ The number of iterations is always **30**, numerical tolerance is always the sam
 | 11 | RBF | 10 | 1 | 97.20%  | 53.78% |
 | 12 | RBF | 10 | 0.01 | 81.79%  | 77.34% |
 
-## Blobs and Circles
+## Blobs and Circles (`blobs_circles_experiments.ipynb`)
 In this subsection I will visualize some data and the decision boundaries my model makes for the data. For this purpose I use two auto-generated datasets from the scikit-learn library: blobs and circles. And because it's better to always have the same data, I saved those as .csv files.
 
 ### Blobs
